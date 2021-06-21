@@ -38,6 +38,8 @@ def login():
         print(f'{cyan}</> logged in "{username}"')
         print(f'\n{req.cookies.get("sessionid")}')
         open(f"{username}.txt","w").write(str(req.cookies.get("sessionid")))
+        input()
+        exit()
     elif "Incorrect Username" in req.text:
         print(f"{red}<!> The username you entered doesn't belong to an account. Please check your username and try again.")
         input()
