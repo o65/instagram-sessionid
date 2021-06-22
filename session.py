@@ -6,16 +6,7 @@ try:
 except ImportError: 
   os.system("pip install requests")
   import requests
-try: 
-  from colored import fg
-except ImportError:
-  os.system("pip install colored")
-  from colored import fg
-
 clear()
-
-
-red,white,cyan=fg("red"),fg("white"),fg("cyan")
 
 def login():
     username = input("</> username: ")
@@ -35,25 +26,25 @@ def login():
     }
     req = requests.post("https://i.instagram.com/api/v1/accounts/login/", headers=head, data=data)
     if "logged_in_user" in req.text:
-        print(f'{cyan}</> logged in "{username}"')
+        print(f'</> logged in "{username}"')
         print(f'\n{req.cookies.get("sessionid")}')
         open(f"{username}.txt","w").write(str(req.cookies.get("sessionid")))
         input()
         exit()
     elif "Incorrect Username" in req.text:
-        print(f"{red}<!> The username you entered doesn't belong to an account. Please check your username and try again.")
+        print(f"<!> The username you entered doesn't belong to an account. Please check your username and try again.")
         input()
         exit()
     elif 'Incorrect password' in req.text:
-        print(f"{red}<!> Sorry, your password was incorrect. Please double-check your password.")
+        print(f"<!> Sorry, your password was incorrect. Please double-check your password.")
         input()
         exit()
     elif 'checkpoint_challenge_required' in req.text:
-        print(f"{red}<!> checkpoint_required")
+        print(f"<!> checkpoint_required")
         input()
         exit()
     else:
-        print(f'{red}<!> {req.text}')
+        print(f'<!> {req.text}')
         input()
         exit()
 
