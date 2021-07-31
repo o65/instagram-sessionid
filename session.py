@@ -35,3 +35,4 @@ def login():
             print(f'[-] {req.json()["message"]}')
             input()
             exit()
+login()
