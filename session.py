@@ -27,7 +27,8 @@ def login():
             print(f"[+] Logged In '{username}'")
             sessionid = req.cookies.get("sessionid")
             print(f"[+] sessionid: {sessionid}")
-            open(f"{username}.txt","w"). write(str(sessionid))
+            open(f"{username}.txt","w").write(str(sessionid))
+            print(f"[+] Saved in {username}.txt")
             input()
             exit()
         else:
