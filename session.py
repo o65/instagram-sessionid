@@ -1,4 +1,4 @@
-import uuid, os, subprocess
+import uuid, os, subprocess, time, calendar
 
 clear = lambda: subprocess.call('cls||clear', shell=True)
 try:
@@ -9,43 +9,28 @@ except ImportError:
 clear()
 
 def login():
-    username = input("</> username: ")
-    password = input("</> password: ")
-    head = {
-        "User-Agent": f'Instagram 130.0.0.00.000 (iPhone12,12; iPhone OS 12; en_US; en) AppleWebKit/600',
-        "Content-Type": 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-    data = {
-        'uuid': uuid.uuid4(),
-        'password': password,
-        'username': username,
-        'device_id': uuid.uuid4(),
-        'from_reg': 'false',
-        '_csrftoken': 'missing',
-        'login_attempt_count': '0'
-    }
-    req = requests.post("https://i.instagram.com/api/v1/accounts/login/", headers=head, data=data)
-    if "logged_in_user" in req.text:
-        print(f'</> logged in "{username}"')
-        print(f'\n{req.cookies.get("sessionid")}')
-        open(f"{username}.txt","w").write(str(req.cookies.get("sessionid")))
-        input()
-        exit()
-    elif "Incorrect Username" in req.text:
-        print(f"<!> The username you entered doesn't belong to an account. Please check your username and try again.")
-        input()
-        exit()
-    elif 'Incorrect password' in req.text:
-        print(f"<!> Sorry, your password was incorrect. Please double-check your password.")
-        input()
-        exit()
-    elif 'checkpoint_challenge_required' in req.text:
-        print(f"<!> checkpoint_required")
-        input()
-        exit()
-    else:
-        print(f'<!> {req.text}')
-        input()
-        exit()
-
-login()
+        username = input("[+] username: ")
+        password = input("[+] password: ")
+        head = {"user-agent": "Instagram 150.0.0.00.000 Android (29/10; 320dpi; 720x1491; 5912586f16aaf155/bfd0b0ddc847ea83; bfd0b0ddc8e19a25; 3a456adb43715eda; be962130f170156c; en_GB; 302733750)"}
+        data = {
+            "jazoest": "22452",
+            "phone_id": uuid.uuid4(),
+            "enc_password": f"#PWD_INSTAGRAM:0:{calendar.timegm(time.gmtime())}:{password}",
+            "username": username,
+            "adid": uuid.uuid4(),
+            "guid": uuid.uuid4(),
+            "device_id": uuid.uuid4(),
+            "google_tokens": "[]",
+            "login_attempt_count": "0"}
+        req = requests.post("https://i.instagram.com/api/v1/accounts/login/", headers=head, data=data)
+        if "logged_in_user" in req.text:
+            print(f"[+] Logged In '{username}'")
+            sessionid = req.cookies.get("sessionid")
+            print(f"[+] sessionid: {sessionid}")
+            open(f"{username}.txt","w"). write(str(sessionid))
+            input()
+            exit()
+        else:
+            print(f'[-] {req.json()["message"]}')
+            input()
+            exit()
