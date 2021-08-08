@@ -1,4 +1,4 @@
-import uuid, os, subprocess, time, calendar
+import uuid, os, subprocess, time, calendar, random, string
 
 clear = lambda: subprocess.call('cls||clear', shell=True)
 try:
