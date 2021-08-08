@@ -11,7 +11,7 @@ clear()
 def login():
         username = input("[+] username: ")
         password = input("[+] password: ")
-        head = {"user-agent": "Instagram 150.0.0.00.000 Android (29/10; 320dpi; 720x1491; 5912586f16aaf155/bfd0b0ddc847ea83; bfd0b0ddc8e19a25; 3a456adb43715eda; be962130f170156c; en_GB; 302733750)"}
+        head = {"user-agent": f"Instagram 150.0.0.0.000 Android (29/10; 300dpi; 720x1440; {''.join(random.choices(string.ascii_lowercase+string.digits, k=16))}/{''.join(random.choices(string.ascii_lowercase+string.digits, k=16))}; {''.join(random.choices(string.ascii_lowercase+string.digits, k=16))}; {''.join(random.choices(string.ascii_lowercase+string.digits, k=16))}; {''.join(random.choices(string.ascii_lowercase+string.digits, k=16))}; en_GB;)"}
         data = {
             "jazoest": "22452",
             "phone_id": uuid.uuid4(),
