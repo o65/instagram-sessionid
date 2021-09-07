@@ -5,7 +5,6 @@ try:
 except ImportError: 
   os.system("pip install requests")
   import requests
-clear()
 
 def login():
         username = input("[+] username: ")
