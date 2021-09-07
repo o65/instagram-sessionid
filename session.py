@@ -1,6 +1,5 @@
-import uuid, os, subprocess, time, calendar, random, string
+import uuid, os, time, calendar, random, string
 
-clear = lambda: subprocess.call('cls||clear', shell=True)
 try:
   import requests
 except ImportError: 
